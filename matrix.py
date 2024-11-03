@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import (
     QApplication, QWidget, QLabel, QLineEdit, QPushButton, QTextEdit,
     QVBoxLayout, QHBoxLayout, QMessageBox, QFileDialog
 )
+import random
 
 
 class ArrayReversalApp(QWidget):
@@ -30,13 +31,15 @@ class ArrayReversalApp(QWidget):
         self.setWindowTitle("Реверсивный массив")
         self.setGeometry(300, 300, 600, 400)
 
-        self.process_button = QPushButton("Массив")
-        self.process_button.clicked.connect(self.alg_matrix)
+        self.process_button = QPushButton("Обработать массив")
+
         layout.addWidget(self.process_button)
 
         self.load_button = QPushButton("Загрузить из файла")
         self.save_button = QPushButton("Сохранить в файл")
-        
+
+
+
 def alg_matrix(self):
     try:
         array = list(map(int, self.array_input.text().split(',')))
@@ -65,6 +68,20 @@ def load_from_file(self):
         except Exception as e:
             QMessageBox.critical(self, "Ошибка", f"Не удалось загрузить файл: {e}")
 
+
+def random_matrix(self):
+    try:
+        n = random.randint(5, 20)
+        array = [random.randint(1, 100) for _ in range(n)]
+        k = random.randint(1, n - 1)
+        l = random.randint(k + 1, n)
+
+        self.array_input.setText(",".join(map(str, array)))
+        self.k_input.setText(str(k))
+        self.l_input.setText(str(l))
+
+    except Exception as e:
+        QMessageBox.critical(self, "Ошибка", f"Произошла ошибка: {e}")
 
 def save_to_file(self):
     file_path, _ = QFileDialog.getSaveFileName(self, "Сохранить файл", "", "Текстовые файлы (*.txt)")
