@@ -8,6 +8,7 @@ from PyQt5.QtWidgets import (
 class ArrayReversalApp(QWidget):
     def __init__(self):
         super().__init__()
+        self.save_button = None
         self.process_button = None
         self.array_input = None
         self.array_label = None
@@ -34,7 +35,8 @@ class ArrayReversalApp(QWidget):
         layout.addWidget(self.process_button)
 
         self.load_button = QPushButton("Загрузить из файла")
-
+        self.save_button = QPushButton("Сохранить в файл")
+        
 def alg_matrix(self):
     try:
         array = list(map(int, self.array_input.text().split(',')))
@@ -62,6 +64,22 @@ def load_from_file(self):
                     self.l_input.setText(data[2])
         except Exception as e:
             QMessageBox.critical(self, "Ошибка", f"Не удалось загрузить файл: {e}")
+
+
+def save_to_file(self):
+    file_path, _ = QFileDialog.getSaveFileName(self, "Сохранить файл", "", "Текстовые файлы (*.txt)")
+    if file_path:
+        try:
+            with open(file_path, 'w') as file:
+                array = self.array_input.text()
+                k = self.k_input.text()
+                l = self.l_input.text()
+                result = self.output_text.toPlainText()
+                file.write(f"{array}\n{k}\n{l}\n{result}")
+        except Exception as e:
+            QMessageBox.critical(self, "Ошибка", f"Не удалось сохранить файл: {e}")
+
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
