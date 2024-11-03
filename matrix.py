@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QLabel, QLineEdit, QPushButton, QTextEdit,
-    QVBoxLayout, QHBoxLayout
+    QVBoxLayout, QHBoxLayout, QMessageBox
 )
 
 
@@ -24,6 +24,27 @@ class ArrayReversalApp(QWidget):
 
         self.setWindowTitle("Реверсивный массив")
         self.setGeometry(300, 300, 600, 400)
+
+        self.process_button = QPushButton("Массив")
+        self.process_button.clicked.connect(self.process_array)
+        layout.addWidget(self.process_button)
+
+
+def alg_matrix(self):
+    try:
+        array = list(map(int, self.array_input.text().split(',')))
+        k = int(self.k_input.text()) - 1
+        l = int(self.l_input.text()) - 1
+
+        if not (0 <= k < l < len(array)):
+            raise ValueError("K и L должны находиться в промежутке 1 ≤ K < L ≤ N")
+
+        array[k:l + 1] = array[k:l + 1][::-1]
+        self.output_text.setPlainText(f"{array}")
+
+    except ValueError as e:
+        QMessageBox.critical(self, "Ошибка", f"Неверный ввод: {e}")
+
 
 
 if __name__ == "__main__":
